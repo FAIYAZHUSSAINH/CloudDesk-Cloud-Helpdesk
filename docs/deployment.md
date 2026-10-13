@@ -4,7 +4,7 @@
 
 ## 1. Publish your own GitHub repository
 
-1. In your GitHub account, create a new empty repository named `CloudDesk-Cloud-Helpdesk`. Choose public or private according to your presentation needs. Leave GitHub's README/license/.gitignore initialization unchecked because this workspace has its own files. No open-source license has been chosen; do not add one without deciding its terms.
+1. Create a new **public** repository named `CloudDesk-Cloud-Helpdesk` in your GitHub account. Leave GitHub's README/license/.gitignore initialization unchecked because this workspace has its own files. No open-source license has been chosen; do not add one without deciding its terms. This repo is to be created and pushed after GitHub authentication succeeds.
 2. Check `git status --short`, `git log --oneline`, and `git remote -v` in this workspace. Confirm the initial local commit contains no `.env`, database, logs, credentials, cache, or virtual environment. The branch is `main`.
 3. Connect **your** repository and verify the URL before pushing:
 
