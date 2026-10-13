@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: clouddesk
+    runtime: docker
+    plan: free
+    autoDeployTrigger: off
+    healthCheckPath: /api/health
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_COOKIE_SECURE
+        value: "1"
+      - key: WEB_CONCURRENCY
+        value: "1"

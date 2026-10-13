@@ -1,0 +1,37 @@
+name: CI and deploy
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: pip-audit -r requirements.txt
+      - run: pytest -q
+      - run: docker build -t clouddesk:ci .
+  deploy:
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render after successful validation
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "Render deploy hook is not configured; deployment skipped."
+            echo "Deployment skipped: RENDER_DEPLOY_HOOK_URL is not configured." >> "$GITHUB_STEP_SUMMARY"
+          else
+            curl --fail --show-error --silent --retry 3 -X POST "$RENDER_DEPLOY_HOOK_URL"
+            echo "Render deploy requested; confirm the service becomes healthy in Render." >> "$GITHUB_STEP_SUMMARY"
+          fi

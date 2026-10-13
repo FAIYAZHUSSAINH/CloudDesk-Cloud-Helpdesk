@@ -1,0 +1,5 @@
+{% extends 'base.html' %}{% block title %}Dashboard{% endblock %}{% block content %}
+<div class="page-heading"><div><span class="eyebrow">YOUR WORKSPACE</span><h1 class="fw-bold mt-2">Good to see you, {{ current_user.name.split()[0] }}.</h1><p class="text-secondary">Your support requests at a glance.</p></div><a class="btn btn-primary" href="{{ url_for('tickets.create') }}">+ New ticket</a></div>
+<div class="row g-3 mb-4">{% for label, key in [('Open','Open'),('In Progress','In Progress'),('Resolved','Resolved'),('Total Tickets','Total')] %}<div class="col-6 col-lg-3"><div class="stat-card"><div class="text-secondary small fw-semibold">{{ label }}</div><div class="stat-value">{{ stats[key] }}</div></div></div>{% endfor %}</div>
+<div class="card"><div class="card-header d-flex justify-content-between align-items-center"><h2 class="h5 mb-0">Recent tickets</h2><a href="{{ url_for('tickets.index') }}">View all</a></div>{% include '_ticket_table.html' %}</div>
+{% endblock %}
