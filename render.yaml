@@ -7,7 +7,7 @@ services:
     healthCheckPath: /api/health
     envVars:
       - key: SECRET_KEY
-        sync: false
+        generateValue: true
       - key: DATABASE_URL
         sync: false
       - key: SESSION_COOKIE_SECURE

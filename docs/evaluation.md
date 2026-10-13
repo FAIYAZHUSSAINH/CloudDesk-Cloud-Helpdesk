@@ -1,6 +1,6 @@
 # Verification, performance, and cost
 
-Evidence recorded on 13 October 2026 (Asia/Kolkata). The public [GitHub repository](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk) and [successful CI run](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38352615426) are verified. Render/Supabase deployment is **not verified**: this workspace has no Supabase credentials, Render service, public URL, or cloud database persistence test.
+Evidence recorded on 13 October 2026 (Asia/Kolkata). The public [GitHub repository](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk) and [successful CI run](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38367164548) are verified. The user ran the Supabase migration helper, created an admin, and reported all five CloudDesk tables in Table Editor. A screenshot and cloud ticket persistence test remain pending. Render deployment is **not verified**: this workspace has no Render service or public URL.
 
 | Component | Implemented | Verified | Evidence |
 |---|---|---|---|
@@ -9,10 +9,10 @@ Evidence recorded on 13 October 2026 (Asia/Kolkata). The public [GitHub reposito
 | Admin dashboard | Yes | Local | Admin status/activity/statistics tests |
 | SLA | Yes | Local | UTC/IST and met/breached tests |
 | SQLite | Yes | Local | Alembic migrations; Docker named volume retained 4 tickets after recreation |
-| PostgreSQL | Yes | Local PostgreSQL 16 only | Both migrations, tables, foreign key, ticket/status activity, and reconnect persistence; Supabase connection needed |
+| PostgreSQL | Yes | Local PostgreSQL 16 and user-assisted Supabase setup | Local foreign key, ticket/status activity, and reconnect persistence; Supabase migration/admin/table list reported by user; cloud ticket persistence pending |
 | Docker | Yes | Local | Image build; migration to `bb7aa36d7612`; container health 200; 4 tickets/4 users after recreate |
 | GitHub repository | Yes | Public remote verified | [FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk), local `main` tracks `origin/main` |
-| GitHub Actions | Yes | Real run passed | [Run 38352615426](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38352615426): Ruff, audit, 11 tests, Docker build; Render trigger skipped |
+| GitHub Actions | Yes | Real run passed | [Run 38367164548](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38367164548): Ruff, audit, 11 tests, Docker build; Render trigger skipped |
 | Render | Blueprint configured | No service | `render.yaml`; deployment URL needed |
 | Public HTTPS | Planned | No | Public browser/health test needed |
 | Security | Controls implemented | Local tests and audit only | 11 pytest tests, Ruff, pip-audit clean; not a certification |
@@ -24,7 +24,7 @@ Git had no commits at audit start, so no earlier repository history could have e
 
 The application has hashed passwords, CLI-only admin creation, owner/admin checks, CSRF on mutations, generic login errors, a five-failure/15-minute account login limit in the shared database, secure production cookies, trusted Render hosts, a PostgreSQL-only Render startup check, and generic server errors. The account limiter is not an IP/global quota, and concurrent attempts may briefly exceed the threshold. Liveness does not check the database. Backups, alerts, password reset, and broader abuse protection are outstanding operational work.
 
-A temporary local PostgreSQL 16 container accepted both Alembic migrations. The verification created a user/admin, inserted and resolved a ticket, found its activity row after a new application connection, and confirmed `tickets.user_id` rejects an invalid foreign key. The temporary container was removed. This checks PostgreSQL compatibility locally; it does **not** prove Supabase connectivity, Render networking, or cloud persistence.
+A temporary local PostgreSQL 16 container accepted both Alembic migrations. The verification created a user/admin, inserted and resolved a ticket, found its activity row after a new application connection, and confirmed `tickets.user_id` rejects an invalid foreign key. The temporary container was removed. Separately, the user ran the Supabase migration helper and reported successful admin creation and all five tables. This supports Supabase connectivity and schema setup, but Render networking and cloud ticket persistence remain unverified.
 
 ## Local test-client latency
 

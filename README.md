@@ -88,7 +88,7 @@ flowchart LR
   Build -->|no hook| Skip[Validation succeeds; deploy skipped]
 ```
 
-The public [GitHub repository](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk) has a [successful Actions run](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38352615426): Ruff, dependency audit, 11 tests, and Docker build passed. Actions uses read-only repository permissions. The deploy job explicitly skipped Render because its hook secret is not set; the green run is **not** a cloud deployment. Render `autoDeployTrigger: off` prevents an independent direct deploy from racing the validated deploy hook. See [deployment instructions](docs/deployment.md) for Supabase connection choices, migrations, Render settings, health checks, recovery, and live verification.
+The public [GitHub repository](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk) has a [successful Actions run](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38367164548): Ruff, dependency audit, 11 tests, and Docker build passed. Actions uses read-only repository permissions. The deploy job explicitly skipped Render because its hook secret is not set; the green run is **not** a cloud deployment. The user completed Supabase migrations and admin setup and reported all five application tables; a live ticket persistence test is pending. Render `autoDeployTrigger: off` prevents an independent direct deploy from racing the validated deploy hook. See [deployment instructions](docs/deployment.md) for Supabase connection choices, migrations, Render settings, health checks, recovery, and live verification.
 
 ## API
 

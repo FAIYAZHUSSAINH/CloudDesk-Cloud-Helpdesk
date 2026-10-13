@@ -40,6 +40,9 @@ def connection_url(template: str, password: str) -> str:
 
 
 def main() -> int:
+    if sys.argv[1:] not in ([], ["--copy-render-url"]):
+        print("Usage: setup_supabase.py [--copy-render-url]", file=sys.stderr)
+        return 2
     print("Copy the URI from Supabase Connect > Session pooler.")
     print("Leave [YOUR-PASSWORD] in the URI; the password is entered separately.")
     template = input("Session pooler URI: ").strip()
@@ -51,6 +54,14 @@ def main() -> int:
         return 2
     finally:
         del password
+
+    if sys.argv[1:] == ["--copy-render-url"]:
+        result = subprocess.run(["clip.exe"], input=url, text=True, check=False)
+        if result.returncode:
+            print("Could not copy the URL to the Windows clipboard.", file=sys.stderr)
+            return result.returncode
+        print("DATABASE_URL copied to the clipboard. Paste it into Render, then clear the clipboard.")
+        return 0
 
     environment = os.environ.copy()
     environment["DATABASE_URL"] = url
