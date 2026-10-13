@@ -1,6 +1,6 @@
 # Verification, performance, and cost
 
-Evidence recorded on 13 October 2026 (Asia/Kolkata). Cloud deployment is **not verified**: this workspace has no Git remote, valid GitHub CLI login, Supabase credentials, Render service, public URL, or GitHub Actions run. A local initial commit on `main` packages the reviewed files for later publication.
+Evidence recorded on 13 October 2026 (Asia/Kolkata). The public [GitHub repository](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk) and [successful CI run](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38352615426) are verified. Render/Supabase deployment is **not verified**: this workspace has no Supabase credentials, Render service, public URL, or cloud database persistence test.
 
 | Component | Implemented | Verified | Evidence |
 |---|---|---|---|
@@ -11,8 +11,8 @@ Evidence recorded on 13 October 2026 (Asia/Kolkata). Cloud deployment is **not v
 | SQLite | Yes | Local | Alembic migrations; Docker named volume retained 4 tickets after recreation |
 | PostgreSQL | Yes | Local PostgreSQL 16 only | Both migrations, tables, foreign key, ticket/status activity, and reconnect persistence; Supabase connection needed |
 | Docker | Yes | Local | Image build; migration to `bb7aa36d7612`; container health 200; 4 tickets/4 users after recreate |
-| GitHub repository | Local Git only | No remote | Local `main` initial commit; external repository awaits owner approval |
-| GitHub Actions | Workflow configured | No run | `.github/workflows/ci.yml`; run URL needed |
+| GitHub repository | Yes | Public remote verified | [FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk), local `main` tracks `origin/main` |
+| GitHub Actions | Yes | Real run passed | [Run 38352615426](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38352615426): Ruff, audit, 11 tests, Docker build; Render trigger skipped |
 | Render | Blueprint configured | No service | `render.yaml`; deployment URL needed |
 | Public HTTPS | Planned | No | Public browser/health test needed |
 | Security | Controls implemented | Local tests and audit only | 11 pytest tests, Ruff, pip-audit clean; not a certification |

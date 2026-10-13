@@ -26,14 +26,14 @@
 24. **What is a Docker container?** A running instance of an image.
 25. **Why use a named volume?** It keeps local SQLite records when a container is replaced.
 26. **What is CI/CD?** Automated validation and, after success, a controlled deployment trigger.
-27. **What is GitHub Actions configured to validate?** Ruff, `pip-audit`, pytest, and Docker image build on PRs and main pushes. No remote run has been observed yet.
+27. **What did GitHub Actions validate?** The verified main-branch run passed Ruff, `pip-audit`, 11 pytest tests, and Docker image build. PRs use the same validation job without production deployment.
 28. **What is the deploy hook?** A secret Render URL called only after the main branch validation job passes.
 29. **What monitoring exists?** A health endpoint and stdout request/error logs; full metrics/tracing are future work.
 30. **What is vertical scaling?** Giving one instance more CPU or memory.
 31. **What is horizontal scaling?** Running more web instances behind a load balancer; it is not implemented here.
 32. **What would S3 add?** Private screenshot storage with short-lived authorized access; it is not implemented.
 33. **What would Terraform add?** Versioned provisioning for an optional S3 bucket; it is not implemented or applied.
-34. **What cloud result is verified?** None yet. Local behavior is tested; live Render/Supabase deployment needs actual credentials and checks.
+34. **What external result is verified?** The public GitHub repository and Actions validation run are verified. Live Render/Supabase deployment and public app persistence still need actual credentials and checks.
 35. **How are brute-force login attempts limited?** Five failed attempts for one normalized email in 15 minutes yield HTTP 429. HMAC email digests and timestamps live in the shared database so workers share the count.
 36. **What limits does that rate limiter have?** It is per account, not a global network firewall; concurrent attempts can slightly exceed the threshold.
 37. **How does Render avoid using SQLite by accident?** Startup rejects non-PostgreSQL URLs, missing TLS mode, weak secrets, or a missing Render hostname.

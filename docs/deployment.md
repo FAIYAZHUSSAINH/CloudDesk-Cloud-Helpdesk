@@ -1,20 +1,12 @@
 # GitHub → Actions → Render → Supabase deployment
 
-**Status, 13 October 2026:** local deployment is verified; external deployment is not. A reviewed initial commit is on local `main`, but this workspace has no Git remote, and the saved GitHub CLI token is invalid. No Supabase or Render credentials are available. Follow these steps using your own accounts, then record the real results in [evidence](evidence/README.md) and [evaluation](evaluation.md). Do not paste passwords or deploy-hook URLs into chat, commands, screenshots, or Git.
+**Status, 13 October 2026:** the public GitHub repository and Actions validation are verified; Render/Supabase deployment is not. No Supabase or Render credentials or public application URL are available. Record the remaining live results in [evidence](evidence/README.md) and [evaluation](evaluation.md). Do not paste passwords or deploy-hook URLs into chat, commands, screenshots, or Git.
 
-## 1. Publish your own GitHub repository
+## 1. GitHub repository and CI (verified)
 
-1. Create a new **public** repository named `CloudDesk-Cloud-Helpdesk` in your GitHub account. Leave GitHub's README/license/.gitignore initialization unchecked because this workspace has its own files. No open-source license has been chosen; do not add one without deciding its terms. This repo is to be created and pushed after GitHub authentication succeeds.
-2. Check `git status --short`, `git log --oneline`, and `git remote -v` in this workspace. Confirm the initial local commit contains no `.env`, database, logs, credentials, cache, or virtual environment. The branch is `main`.
-3. Connect **your** repository and verify the URL before pushing:
+The public repository is [FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk). Local `main` tracks `origin/main`, and the remote URL points to that same account. The initial secret scan found only placeholders/test values in candidate files; `.env`, local databases, caches, virtual environments, and credentials were excluded from the commit. No open-source license has been chosen.
 
-```powershell
-git remote add origin https://github.com/<YOUR_GITHUB_USER>/CloudDesk-Cloud-Helpdesk.git
-git remote get-url origin
-git push -u origin main
-```
-
-Replace the placeholder with your own username. The push and external repository creation require your approval. For later changes, open a pull request, check CI, and merge to `main`. A workflow file alone is not evidence of a successful GitHub Actions run.
+[Actions run 38352615426](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38352615426) passed Ruff, `pip-audit`, 11 tests, and Docker build. The deploy job said “Render deploy hook is not configured; deployment skipped.” For subsequent changes, open a pull request, inspect CI, and merge to `main` after validation. A successful CI run does not establish that Render has deployed.
 
 ## 2. Prepare Supabase PostgreSQL
 

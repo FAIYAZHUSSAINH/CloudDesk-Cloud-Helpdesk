@@ -18,7 +18,7 @@ Werkzeug hashes passwords; Flask-Login manages sessions; admin accounts are prov
 
 ## Docker, CI/CD, and monitoring
 
-Docker packages Python, dependencies, and Gunicorn; a container runs that image. Compose uses a named SQLite volume for local persistence. GitHub Actions is configured to run Ruff, a dependency advisory audit, pytest, and Docker build on pull requests and main pushes. A successful main build can call the Render deploy hook; a missing hook skips deploy. There has been no GitHub Actions run. A liveness endpoint and stdout logs help find startup and request errors. They do not replace metrics, tracing, or alerts.
+Docker packages Python, dependencies, and Gunicorn; a container runs that image. Compose uses a named SQLite volume for local persistence. The public GitHub repository has a [successful Actions run](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38352615426): Ruff, the dependency advisory audit, 11 pytest tests, and Docker build passed. Its deploy job explicitly skipped Render because the hook secret is absent. A successful future main build can call the Render deploy hook once configured. A liveness endpoint and stdout logs help find startup and request errors. They do not replace metrics, tracing, or alerts.
 
 ## Testing and performance
 

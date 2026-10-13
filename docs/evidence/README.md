@@ -10,12 +10,12 @@ Evidence is dated 13 October 2026 unless a later date is written beside an item.
 | Ticket resolution and SLA | Captured | [Ticket #5 resolved](ticket-resolved-local.png) with activity and SLA Met |
 | Supabase PostgreSQL records | Not available | After deployment, use Supabase table editor; capture ticket ID/status and visible foreign key columns, hiding project credentials |
 | Docker image/container | Verified; screenshot pending | Capture `docker compose ps`, `docker images clouddesk-web`, and `/api/health` result; include date and host |
-| Successful GitHub Actions | Not available | Capture real run URL, Ruff/audit/pytest/Docker results, and deploy job summary |
+| Successful GitHub Actions | Captured | [Real success screenshot](github-actions-success.png), [run 38352615426](https://github.com/FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk/actions/runs/38352615426): Ruff, audit, 11 tests, Docker build; Render hook explicitly skipped |
 | Render deployment | Not available | Capture service deployment status and logs after the deploy hook; hide environment values and hook URL |
 | Public HTTPS application | Not available | Capture browser address bar, health 200, user ticket, admin flow, and post-redeploy persistence |
 | Application logs | Local available; screenshot pending | Capture `docker compose logs --tail 30 web` without passwords; later capture Render logs |
 
-The local run verified migration `bb7aa36d7612`, HTTP health 200, and 4 tickets/4 users after Docker container recreation. The browser flow then created and resolved ticket #5. A later Docker HTTP benchmark added 10 clearly named benchmark tickets; screenshots show the earlier dashboard state. None of this is cloud evidence. The real GitHub Actions run, Render URL, and Supabase connection remain missing.
+The local run verified migration `bb7aa36d7612`, HTTP health 200, and 4 tickets/4 users after Docker container recreation. The browser flow then created and resolved ticket #5. A later Docker HTTP benchmark added 10 clearly named benchmark tickets; screenshots show the earlier dashboard state. GitHub Actions has a real passing run, while Render URL and Supabase connection remain missing. The green deploy job performed no cloud deployment because the hook secret is absent.
 
 ## Manual cloud evidence checklist
 
