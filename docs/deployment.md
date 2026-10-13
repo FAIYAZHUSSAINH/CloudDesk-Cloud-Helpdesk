@@ -17,22 +17,14 @@ The public repository is [FAIYAZHUSSAINH/CloudDesk-Cloud-Helpdesk](https://githu
 
 ### Apply migrations and create an admin without a paid Render shell
 
-Render's pre-deploy command requires a paid instance, so run migrations **before first service creation** from your trusted computer with this repository and local Python dependencies. Your computer must be able to reach Supabase. This PowerShell prompt hides input; it leaves the URL only in the current process environment during the commands and then clears it:
+Render's pre-deploy command requires a paid instance, so run migrations **before first service creation** from your trusted computer with this repository and local Python dependencies. Your computer must be able to reach Supabase. Copy the **Session pooler** URI with `[YOUR-PASSWORD]` unchanged, then run the helper from PowerShell:
 
 ```powershell
-$privateUri = Read-Host 'Supabase session-pooler URI with sslmode=require' -AsSecureString
-$privatePtr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($privateUri)
-try { $env:DATABASE_URL = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($privatePtr) }
-finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($privatePtr) }
-try {
-  .\.venv\Scripts\flask.exe --app run:app db upgrade
-  .\.venv\Scripts\flask.exe --app run:app db current
-  .\.venv\Scripts\flask.exe --app run:app create-admin
-}
-finally { Remove-Item Env:DATABASE_URL -ErrorAction SilentlyContinue }
+Set-Location 'C:\Users\ASUS\Desktop\CloudDesk'
+.\.venv\Scripts\python.exe .\scripts\setup_supabase.py
 ```
 
-`db current` should show `bb7aa36d7612`. `create-admin` prompts for its own unique password without echo. Do not run `seed-demo` against Supabase. For later schema changes, take a backup, use backward-compatible migrations, run the migration once while the old app still works, then deploy the matching code. Supabase table editor should show `users`, `tickets`, `ticket_activities`, `login_failures`, and `alembic_version`. In the database UI, verify the `tickets.user_id` and activity foreign keys after migration. These migrations passed on a temporary local PostgreSQL 16 container, but Supabase itself has not been tested.
+The helper asks for the database password without echo, percent-encodes it, adds `sslmode=require` if absent, and passes the URI only through child-process environment variables. It does not save or print the URI. `db current` should show `bb7aa36d7612`. The helper then offers to create a private admin account; answer `y` and enter a unique admin password when prompted. Do not run `seed-demo` against Supabase. For later schema changes, take a backup, use backward-compatible migrations, run the migration once while the old app still works, then deploy the matching code. Supabase table editor should show `users`, `tickets`, `ticket_activities`, `login_failures`, and `alembic_version`. In the database UI, verify the `tickets.user_id` and activity foreign keys after migration. These migrations passed on a temporary local PostgreSQL 16 container, but Supabase itself has not been tested.
 
 ## 3. Create the Render service
 
